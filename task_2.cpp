@@ -14,6 +14,10 @@ public:
         return domain_title_ == other_domain.domain_title_;
     }
 
+    bool operator<(const Domain& other_domain) const {
+        return domain_title_ < other_domain.domain_title_;
+    }
+
     bool IsSubdomain(const Domain& other_domain) const {
         return domain_title_.size() >= other_domain.domain_title_.size() &&
                std::equal(other_domain.domain_title_.begin(), other_domain.domain_title_.end(), domain_title_.begin());
@@ -41,10 +45,7 @@ public:
     }
 
     bool IsForbidden(const Domain& domain_to_check) const {
-        auto domain_pos_it = std::upper_bound(forbidden_.begin(), forbidden_.end(), domain_to_check,
-            [](const Domain& lhs, const Domain& rhs) {
-                return lhs.GetDomain() < rhs.GetDomain();
-            });
+        auto domain_pos_it = std::upper_bound(forbidden_.begin(), forbidden_.end(), domain_to_check);
 
         if (domain_pos_it != forbidden_.begin()) {
             --domain_pos_it;
