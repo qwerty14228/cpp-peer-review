@@ -45,21 +45,3 @@ std::vector<Person> LoadPersons(std::string_view db_name, int db_connection_time
     DBQueryParameters params{min_age, max_age, std::string(name_filter)};
     return ExecutePersonQuery(db, params);
 }
-
-int main() {
-    std::string db_name = "mydb";
-    int db_connection_timeout = 10;
-    bool db_allow_exceptions = true;
-    DBLogLevel db_log_level = DBLogLevel::Info;
-    int min_age = 20;
-    int max_age = 40;
-    std::string name_filter = "John";
-
-    std::vector<Person> persons = LoadPersons(db_name, db_connection_timeout, db_allow_exceptions, db_log_level, min_age, max_age, name_filter);
-
-    for (const Person& person : persons) {
-        std::cout << "Name: " << person.name << ", Age: " << person.age << std::endl;
-    }
-
-    return 0;
-}
